@@ -17,16 +17,16 @@ extern char **environ;
 
 char *__getCommand(void);
 char **tokenCmd(char *line);
-int execute(char **cmd, char **av);
+int _execute(char **cmd, char **av);
 ssize_t __getline(char **line, size_t *buffsize, FILE *stream);
-void Comments(char ***cmd);
+void _Comments(char ***cmd);
 
 char *__env(char *args);
 int __exitShell(char **tokens, char *buffer);
 void __puts(char *str);
 int __atoi(char *str);
 
-void freeBuff(char **buff);
+void _freeBuff(char **buff);
 char *__strcpy(char *dest, char *src);
 char *__strcat(char *dest, char *src);
 int __strlen(char *s);

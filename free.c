@@ -6,7 +6,7 @@
  * @buff: array of strings to be freed
  * Return: Void
  */
-void freeBuff(char **buff)
+void _freeBuff(char **buff)
 {
 int i;
 if (buff == NULL)

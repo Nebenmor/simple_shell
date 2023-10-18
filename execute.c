@@ -11,7 +11,7 @@
  * @av: argument
  * Return: Exit status of the executed command
  */
-int execute(char **cmd, char **av)
+int _execute(char **cmd, char **av)
 {
 	pid_t pid;
 	int status = 0;

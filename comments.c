@@ -7,7 +7,7 @@
  * @cmd: command
  * Return: Void
  */
-void Comments(char ***cmd)
+void _Comments(char ***cmd)
 {
 int i = 0;
 int j;
