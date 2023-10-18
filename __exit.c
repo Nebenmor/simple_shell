@@ -6,7 +6,7 @@
  * @buffer: Buffer.
  * Return: Integer.
  */
-int exitShell(char **tokens, char *buffer)
+int __exitShell(char **tokens, char *buffer)
 {
     int counter = 0;
     int exitStatus = 0;

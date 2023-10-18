@@ -18,13 +18,13 @@ extern char **environ;
 char *__getCommand(void);
 char **tokenCmd(char *line);
 int execute(char **cmd, char **av);
-ssize_t _getline(char **line, size_t *buffsize, FILE *stream);
+ssize_t __getline(char **line, size_t *buffsize, FILE *stream);
 void Comments(char ***cmd);
 
 char *__env(char *args);
-int __exxit_sh(char **toks, char *buff);
+int __exitShell(char **tokens, char *buffer);
 void __puts(char *str);
-int __atoi(char *ptr);
+int __atoi(char *str);
 
 void freeBuff(char **buff);
 char *__strcpy(char *dest, char *src);
@@ -33,6 +33,6 @@ int __strlen(char *s);
 int __strcmp(char *s1, char *s2);
 char *__strdup(const char *str);
 
-int _putchar(char c);
+int __putchar(char c);
 
 #endif
