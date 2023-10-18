@@ -9,7 +9,7 @@
 
 
 
-void __puts(char *str); /* calls the _puts function */
+void __puts(char *str) /* calls the _puts function */
 
 {
 
