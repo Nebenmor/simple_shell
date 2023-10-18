@@ -5,7 +5,7 @@
  * @arg: Argument.
  * Returns the environment variable.
  */
-char *getenv(char *arg)
+char *get__env(char *arg)
 {
     char *key;
     char *temp;

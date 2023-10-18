@@ -3,37 +3,36 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <errno.h>
-#include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
+#include <fcntl.h>
 
 
 #define delim " \t\r\n\a\""
 #define MAX_INPUT_SIZE 1024
 extern char **environ;
 
-char *_getCommand(void);
+char *__getCommand(void);
 char **tokenCmd(char *line);
 int execute(char **cmd, char **av);
-ssize_t _getline(char **line, size_t *buffsize, FILE *stream);
+ssize_t __getline(char **line, size_t *buffsize, FILE *stream);
 void Comments(char ***cmd);
 
-char *_env(char *args);
-int _exxit_sh(char **toks, char *buff);
-void _puts(char *str);
-int _atoi(char *ptr);
+char *__env(char *args);
+int __exitShell(char **tokens, char *buffer);
+void __puts(char *str);
+int __atoi(char *str);
 
 void freeBuff(char **buff);
-char *_strcpy(char *dest, char *src);
-char *_strcat(char *dest, char *src);
-int _strlen(char *s);
-int _strcmp(char *s1, char *s2);
-char *_strdup(const char *str);
+char *__strcpy(char *dest, char *src);
+char *__strcat(char *dest, char *src);
+int __strlen(char *s);
+int __strcmp(char *s1, char *s2);
+char *__strdup(const char *str);
 
-int _putchar(char c);
+int __putchar(char c);
 
 #endif

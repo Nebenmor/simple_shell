@@ -7,7 +7,7 @@
  * @stream: File descriptor.
  * Returns the number of characters read, -1 on failure.
  */
-ssize_t getline(char **line, size_t *buffsize, FILE *stream)
+ssize_t __getline(char **line, size_t *buffsize, FILE *stream)
 {
     size_t n_chars = 0;
     char c;

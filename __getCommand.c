@@ -4,7 +4,7 @@
  * Gets a command from the user.
  * Returns a pointer to the command.
  */
-char *getCommand(void)
+char *__getCommand(void)
 {
     size_t n_chars = 0;
     char *command = NULL;
