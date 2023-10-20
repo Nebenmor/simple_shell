@@ -8,20 +8,22 @@
  *
  * Return: 0 if they are not equal. Another value if they are.
  */
+
 int cmp__env_name(const char *nenv, const char *name)
 {
 	int i = 0;
+
 	while (nenv[i] != '=')
 	{
 		switch (nenv[i] != name[i])
 		{
 			case 1:
-				return 0;
+				return (0);
 			default:
 				i++;
 		}
 	}
-	return i + 1;
+	return (i + 1);
 }
 
 /**
@@ -53,7 +55,7 @@ char *_getenv(const char *name, char **__environ)
 		i++;
 	}
 
-	return ptr__env + mov;
+	return (ptr__env + mov);
 }
 
 /**
@@ -77,5 +79,5 @@ int __env(data__shell *datash)
 	}
 	datash->status = 0;
 
-	return 1;
+	return (1);
 }
