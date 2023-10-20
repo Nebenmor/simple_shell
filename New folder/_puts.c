@@ -17,12 +17,12 @@ while (*str != '\0')
 
 {
 
-_putchar(*str); /* The _putchar function is called to print each character */
+__putchar(*str); /* The _putchar function is called to print each character */
 
 str++; /* post Increment */
 
 }
 
-_putchar('\n'); /* Follows the string with a new line on printing */
+__putchar('\n'); /* Follows the string with a new line on printing */
 
 }
