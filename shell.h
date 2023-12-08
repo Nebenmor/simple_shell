@@ -60,16 +60,15 @@ int token_command(char *user_command, char *args[]);
 
 int set_env_var(char *var, char *value);
 
-int cd_dir(const char *args, char *argv, char *envp[]);
+int cd_dir(const char *arg_count, char *argument_count, char *envp[]);
 
-int upd_env_var(const char *path, char *envp[]);
+int upd_env_var(const char *poth, char *environ[]);
 
-int change_dir(const char *path, char *argv);
+int change_dir(const char *poth, char *argvo);
 
 int pass_cd_arg(const char *user_command);
 
 ssize_t get_line(char *buffer, size_t size);
-
 
 char *s_strdup(const char *string);
 
@@ -105,12 +104,11 @@ int get_status_code(int status);
 
 void IntStr(int val, char *strr, int size);
 
-
 int execute_command(char *args[], int check, int *last_status,
-		char *argv, char *envp[]);
+					char *argv, char *envp[]);
 
 int handle_cd(char *mycmd, char *args[], int check,
-		int *last_status, char *argv, char *envp[]);
+			  int *last_status, char *argv, char *envp[]);
 
 int handle_exit(char *args[], int check, char *argv);
 
@@ -120,9 +118,8 @@ int handle_unsetenv(char *mycmd, char *args[], int check, int *last_status);
 
 void replace_status_variable(char *args[], int count, int *last_status);
 
-
 int split_logical_operator(char *input, const char *delimiter,
-char *output[]);
+						   char *output[]);
 
 void remove_quote(char *input, char *output);
 
@@ -135,7 +132,7 @@ int ispositiveInt(char *str);
 int isnegativeInt(char *str);
 
 int execute_commands_from_file(const char *filename, char *envp[],
-char *program_name);
+							   char *program_name);
 
 int check_cmd(char *mycmd);
 
@@ -160,15 +157,14 @@ char *get_pid_str();
 int s_isalnum(unsigned char c);
 char *StrCpyM(char *beginning, size_t n);
 
-
 void createAndWriteErrorMessage(test *mytest, char *args[], char *argv);
 void handleExitWithCode(test *mytest, int code);
 
 void execute_logical_commands(char *copy, char *args[], int check,
-int *last_status, char *argv, char *envp[]);
+							  int *last_status, char *argv, char *envp[]);
 int is_whitespace_string(char *str);
 int handle_noninbuilt_cmd(char *mycmd, char *args[], int check,
-int *last_status, char *argv, char *envp[]);
+						  int *last_status, char *argv, char *envp[]);
 int run_command(char *user_command, char *argv, char *envp[]);
 
 void intToString(int num, char *str, int str_size);
