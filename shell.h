@@ -32,9 +32,9 @@ typedef struct info
 
 void set_executable_name(char *name);
 
-void prompt(char *c, int len);
+void prompt_func(char *c, int len);
 
-ssize_t take_input(char *input);
+ssize_t takeing_input(char *input);
 
 int run_commandfile(char *user_command, char *argv, char *envp[]);
 
@@ -46,9 +46,9 @@ int exec_command(char *user_command, char *args[], char *argv, char **env);
 
 int exec_command_withpath(char *user_command, char *args[], char **env);
 
-void exitShell(int status);
+void exit_the_Shell(int status);
 
-int chk_cmd_before_fork(char *user_command);
+int checking_cmd_before_fork(char *user_command);
 
 int setenv_cmd(char *user_command);
 
@@ -128,7 +128,7 @@ void remove_quote(char *input, char *output);
 
 int alias(char *args[], int check);
 
-void signal_handler(int signal);
+void handling_signal(int signal);
 
 int ispositiveInt(char *str);
 
@@ -152,11 +152,11 @@ void pwd(void);
 void handle_pwd(char *args[]);
 
 char *handle_double_dollars(char *cmd, char *envp[]);
-void char *cmd, char *output, int *i,
-int *j, char *envp[]);
+void deal_with_env_variable(char *cmd, char *output, int *i,
+		int *j, char *envp[]);
 void double_dollar(char *cmd, char *output, int *i, int *j);
-char *get_environ(char *var_name, char *envp[]);
-char *get_process_id_string();
+char *get_environ(char *variable_name, char *envp[]);
+char *get_pid_str();
 int s_isalnum(unsigned char c);
 char *StrCpyM(char *beginning, size_t n);
 

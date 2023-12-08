@@ -1,23 +1,23 @@
 #include "shell.h"
 
 /**
- * prompt - function to print $
+ * prompt_func - function to print the $ symbol
  * @c: character pass
- * @len: length of the string
+ * @len: represent length of the string
  * Return: void
  */
-void prompt(char *c, int len)
+void prompt_func(char *c, int len)
 {
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, c, len);
 }
 
 /**
- * take_input - function to take command input
- * @input: th command to use
+ * taking_input - function to take command the input
+ * @input: represents the command to use
  * Return: return void
  */
-ssize_t take_input(char *input)
+ssize_t taking_input(char *input)
 {
 	ssize_t read_bytes = read(STDIN_FILENO, input, INPUT_SIZE);
 
@@ -28,66 +28,66 @@ ssize_t take_input(char *input)
 
 
 /**
- * exitShell - function to create an exitfunction
- * @status: the status code if any
+ * exit_the_Shell - this function helps to create an exit function
+ * @status: shows the status code if any
  * Return: void
  */
-void exitShell(int status)
+void exit_the_Shell(int status)
 {
 	exit(status);
 }
 
 
 /**
- * chk_cmd_before_fork - function to check before creating fork
+ * checking_cmd_before_fork - function to check before creating the fork
  * @user_command: the command to check
  * Return: 0 for success and 1 otherwise
  */
-int chk_cmd_before_fork(char *user_command)
+int checking_cmd_before_fork(char *user_command)
 {
-	char *path_lookup, *duplicate, *store_path;
+	char *path_lookups, *duplicates, *store_paths;
 
-	path_lookup = getenv("PATH");
+	path_lookups = getenv("PATH");
 
-	if (path_lookup == NULL)
+	if (path_lookups == NULL)
 		return (-1);
 
-	duplicate = s_strdup(path_lookup);
-	if (duplicate == NULL)
+	duplicates = s_strdup(path_lookups);
+	if (duplicates == NULL)
 		return (-1);
 
-	store_path = s_strtok(duplicate, ":");
+	store_paths = s_strtok(duplicates, ":");
 
-	for (; store_path != NULL ;)
+	for (; store_paths != NULL ;)
 	{
 		char abs_path[PATH_SIZE];
 
-		s_strcpy(abs_path, store_path);
+		s_strcpy(abs_path, store_paths);
 		s_strcat(abs_path, "/");
 		s_strcat(abs_path, user_command);
 
 		if (access(abs_path, X_OK) == 0)
 		{
-			free(duplicate);
+			free(duplicates);
 			return (0);
 		}
-		store_path = s_strtok(NULL, ":");
+		store_paths = s_strtok(NULL, ":");
 	}
-	free(duplicate);
+	free(duplicates);
 	return (1);
 }
 
 /**
- * signal_handler - function to handle signal
+ * handling_signal - function to handle signal
  * @signal: the signal
  * Return: void
  */
-void signal_handler(int signal)
+void handling_signal(int signal)
 {
 	if (signal == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		prompt("$ ", s_strlen("$ "));
+		prompt_func("$ ", s_strlen("$ "));
 		fflush(stdout);
 	}
 }
