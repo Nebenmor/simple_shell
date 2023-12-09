@@ -88,6 +88,7 @@ void deal_with_env_variable(char *cmd, char *output, int *i,
 		if (env_value)
 		{
 			int l;
+
 			for (l = 0; env_value[l] != '\0'; l++)
 			{
 			output[(*j)++] = env_value[l];

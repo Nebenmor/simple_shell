@@ -36,15 +36,17 @@ void prompt_func(char *c, int len);
 
 ssize_t takeing_input(char *input);
 
-int run_commandfile(char *user_command, char *argv, char *envp[]);
+int run_command_of_files(char *user_command, char *argv, char *envp[]);
 
 void handle_command_exit(int status, const char *user_command);
 
-void tokenize_command(char *user_command, char **args);
+void tokenizing_the_user_command(char *user_command, char **args);
 
-int exec_command(char *user_command, char *args[], char *argv, char **env);
+int execute_the_command(char *user_command, char *args[],
+		char *argv, char **env);
 
-int exec_command_withpath(char *user_command, char *args[], char **env);
+int executing_the_command_withPath(char *user_command,
+		char *args[], char **env);
 
 void exit_the_Shell(int status);
 
@@ -104,17 +106,19 @@ int get_status_code(int status);
 
 void IntStr(int val, char *strr, int size);
 
-int execute_command(char *args[], int check, int *last_status,
+int executing_comm(char *args[], int check, int *last_status,
 					char *argv, char *envp[]);
 
-int handle_cd(char *mycmd, char *args[], int check,
+int handling_cd_command(char *mycmd, char *args[], int check,
 			  int *last_status, char *argv, char *envp[]);
 
 int handle_exit(char *args[], int check, char *argv);
 
-int handle_setenv(char *mycmd, char *args[], int check, int *last_status);
+int handling_setenv_command(char *mycmd, char *args[],
+		int check, int *last_status);
 
-int handle_unsetenv(char *mycmd, char *args[], int check, int *last_status);
+int handling_unsetenv_command(char *mycmd, char *args[],
+		int check, int *last_status);
 
 void replace_status_variable(char *args[], int count, int *last_status);
 

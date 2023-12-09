@@ -19,16 +19,15 @@ void delete_comments(char *cmd)
 	for (; cmd[index] != '\0'; index++)
 	{
 		if (cmd[index] == '"')
-			{
-				qou = !qou;
-			}
+		qou = !qou;
+
 	else if (!qou && cmd[index] == '#' && is_word_start(cmd, index))
 	{
 	cmd[index] = '\0';
 	break;
 	}
 
-	}	
+	}
 }
 
 /**

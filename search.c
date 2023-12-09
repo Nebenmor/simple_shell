@@ -1,77 +1,88 @@
 #include "shell.h"
 
 /**
- * tokenize_usercommand - function to tokenize user command from the argument
- * @user_command: the string passed from the console
- * @args: the array of pointer to strings to store the tokenized arguments
+ * tokenizing_the_user_command - tokenize user command from argument
+ * @user_command: the string passed from the xterm
+ * @args: is the array of pointer to strings to store the tokenized arguments
  * Return: void
  */
-void tokenize_usercommand(char *user_command, char **args)
+void tokenizing_the_user_command(char *user_command, char **args)
 {
 	int index;
-	char *copy = s_strdup(user_command);
-	char *mytok = s_strtok(copy, " ");
+	char *copies, *mytoken;
 
-	for (index = 0; mytok != NULL; index++)
+
+	copies = s_strdup(user_command);
+	mytoken = s_strtok(copies, " ");
+
+	index = 0;
+
+	while (mytoken != NULL)
 	{
-		args[index] = mytok;
-		mytok = s_strtok(NULL, " ");
+		args[index] = mytoken;
+		mytoken = s_strtok(NULL, " ");
+		index++;
 	}
+
 	args[index] = NULL;
 }
 
 /**
- * exec_command_withpath - function to execute command without path specifield
+ * executing_the_command_withPath - execute command without specifield path
  * @user_command: the user command
  * @args: the flag of the command
  * @env: parent environment
  * Return: 0 for success
  */
-int exec_command_withpath(char *user_command, char *args[], char **env)
+int executing_the_command_withPath(char *user_command,
+		char *args[], char **env)
 {
 	int index;
 	int result = -1;
-	char *path_token;
-	char *command_path, *duplicate;
+	char *path_of_token, *the_command_path, *duplicate_copies;
 
-	command_path = getenv("PATH");
+	the_command_path = getenv("PATH");
 
-	if (command_path == NULL)
+	if (the_command_path == NULL)
 		return (-1);
 
-	duplicate = s_strdup(command_path);
-	if (duplicate == NULL)
+	duplicate_copies = s_strdup(the_command_path);
+	if (duplicate_copies == NULL)
 		return (-1);
 
-	path_token = s_strtok(duplicate, ":");
+	path_of_token = s_strtok(duplicate_copies, ":");
 
-	for (index = 0; path_token != NULL; index++)
+	index = 0;
+	while (path_of_token != NULL)
 	{
 		char abs_path[PATH_SIZE];
 
-		s_strcpy(abs_path, path_token);
+		s_strcpy(abs_path, path_of_token);
 		s_strcat(abs_path, "/");
 		s_strcat(abs_path, user_command);
 
 		result = execve(abs_path, args, env);
 
 		if (result == -1)
-			path_token = s_strtok(NULL, ":");
+			path_of_token = s_strtok(NULL, ":");
+		index++;
 	}
-	free(duplicate);
+
+	free(duplicate_copies);
 
 	return (result);
 }
 
 /**
- * exec_command - function to execute the command
+ * executing_the_command - function to execute the command
  * @user_command: the command pass
  * @args: the flag of the command
  * @argv: the program name
  * @envp: the parent environment
  * Return: 0 if success
  */
-int exec_command(char *user_command, char *args[], char *argv, char **envp)
+int executing_the_command(char *user_command, char *args[],
+		char *argv, char **envp)
 {
 	int result;
 
@@ -87,7 +98,7 @@ int exec_command(char *user_command, char *args[], char *argv, char **envp)
 			print_err(args[0], argv);
 			exit(127);
 		}
-		result = exec_command_withpath(user_command, args, envp);
+		result = executing_the_command_withPath(user_command, args, envp);
 
 		if (result == -1)
 		{
@@ -100,14 +111,14 @@ int exec_command(char *user_command, char *args[], char *argv, char **envp)
 }
 
 /**
- * run_commandfile - function to run command
- * @user_command: the command to run
+ * run_command_of_files - function to run the command
+ * @user_command: is the command to run
  * @argv:; the program name
  * @envp: parent environment
  * Return: child pid
  */
 
-int run_commandfile(char *user_command, char *argv, char *envp[])
+int run_command_of_files(char *user_command, char *argv, char *envp[])
 {
 	int handled = 0;
 	int i, last_status = 0;
@@ -122,27 +133,30 @@ int run_commandfile(char *user_command, char *argv, char *envp[])
 		cmd_token = s_strtok(NULL, ";\n");
 	}
 
-	for (i = 0; i < num_cmd; i++)
+	i = 0;
+
+	while (i < num_cmd)
 	{
 		char *mycmd = cmd_list[i];
 		char *args[ARG_SIZE];
 		int check = token_command(mycmd, args);
 
 		replace_status_variable(args, check, &last_status);
-		handled = handle_cd(mycmd, args, check, &last_status, argv, envp);
+		handled = handling_cd_command(mycmd, args, check, &last_status, argv, envp);
 		if (handled != 1)
 			return (handled);
 		handled = handle_exit(args, check, argv);
 		if (handled != 1)
 			return (handled);
-		handled = handle_setenv(mycmd, args, check, &last_status);
+		handled = handling_setenv_command(mycmd, args, check, &last_status);
 		if (handled != 1)
 			return (handled);
-		handled = handle_unsetenv(mycmd, args, check, &last_status);
+		handled = handling_unsetenv_command(mycmd, args, check, &last_status);
 		if (handled != 1)
 			return (handled);
-		if (execute_command(args, check, &last_status, argv, envp) == 1)
+		if (executing_comm(args, check, &last_status, argv, envp) == 1)
 			return (2);
+		i++;
 	}
 	return (last_status);
 }

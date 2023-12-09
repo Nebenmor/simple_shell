@@ -1,36 +1,40 @@
 #include "shell.h"
 
 /**
- * execute_command - function that create fork and execute command
- * @args: the command to execute
- * @check: the number of token return
+ * executing_comm - This function creates fork and execute command
+ * @args: is the command to execute
+ * @check: is the number of token returned
  * @last_status: the variable that keeps the value of return
  * @argv: the program name
  * @envp: parent environment
  * Return: 0 for success
  */
-int execute_command(char *args[], int check, int *last_status,
+int executing_comm(char *args[], int check, int *last_status,
 		char *argv, char *envp[])
 {
-	int j;
+	int j = 0;
 	test mytest;
-	pid_t child_pid = fork();
+	pid_t child_process_id = fork();
 
-	if (child_pid < 0)
+	if (child_process_id < 0)
 		return (-1);
-	if (child_pid == 0)
+	if (child_process_id == 0)
 	{
-		char **exec_Args = malloc((check + 1) * sizeof(char *));
+		char **exec_Args = realloc(NULL, ((check + 1) * sizeof(char *)));
 
 		if (exec_Args == NULL)
 			return (-1);
-		for (j = 0; j < check; j++)
-		{
-			exec_Args[j] = s_strdup(args[j]);
 
-			if (exec_Args[j] == NULL)
-				return (-1);
+		while (j < check)
+		{
+		exec_Args[j] = s_strdup(args[j]);
+
+		if (exec_Args[j] == NULL)
+		return (-1);
+
+		j++;
 		}
+
 		exec_Args[check] = NULL;
 
 		if (exec_command(exec_Args[0], exec_Args, argv, envp) == -1)
@@ -38,8 +42,16 @@ int execute_command(char *args[], int check, int *last_status,
 			perror(exec_Args[0]);
 			exit(2);
 		}
-		for (j = 0; j < check; j++)
+
+		int j = 0;
+
+		while (j < check)
+		{
 			free(exec_Args[j]);
+			j++;
+		}
+
+
 		free(exec_Args);
 	}
 
@@ -55,24 +67,24 @@ int execute_command(char *args[], int check, int *last_status,
 
 
 /**
- * handle_cd - function to handle CD command
- * @mycmd: the command at the first index
- * @args: the command to execute
+ * handle_cd_command - this function helps to handle CD command
+ * @mycmd: represents the command at the first index
+ * @args: the is command to execute
  * @check: the number of token return
  * @last_status: the variable that keeps the value of return
  * @argv: the program name
  * @envp: parent environment
  * Return: 0 for success
  */
-int handle_cd(char *mycmd, char *args[], int check,
+int handle_cd_command(char *mycmd, char *args[], int check,
 		int *last_status, char *argv, char *envp[])
 {
-	if (chk_cmd_before_fork(mycmd) == 1 && check > 0 &&
+	if (checking_cmd_before_fork(mycmd) == 1 && check > 0 &&
 		s_strcmp(args[0], "cd") == 0)
 	{
-		int outcome = cd_dir(args[1], argv, envp);
+		int product = cd_dir(args[1], argv, envp);
 
-		if (outcome == 0)
+		if (product == 0)
 		{
 			*last_status = 0;
 			return (0);
@@ -84,17 +96,17 @@ int handle_cd(char *mycmd, char *args[], int check,
 }
 
 /**
- * handle_setenv - function to handle setenv command
+ * handling_setenv_command - this function handles setenv command
  * @mycmd: the command at first index
- * @args: the command to execute
- * @check: the number of token return
+ * @args: is the command to execute
+ * @check: the number of token returned
  * @last_status: the variable that keeps the value of return
  * Return: 0 on success
  */
-int handle_setenv(char *mycmd, char *args[],
+int handling_setenv_command(char *mycmd, char *args[],
 		int check, int *last_status)
 {
-	if (chk_cmd_before_fork(mycmd) == 1 && check > 0 &&
+	if (checking_cmd_before_fork(mycmd) == 1 && check > 0 &&
 		s_strcmp(args[0], "setenv") == 0)
 	{
 		int env_rs = setenv_cmd(mycmd);
@@ -112,17 +124,17 @@ int handle_setenv(char *mycmd, char *args[],
 
 
 /**
- * handle_unsetenv - function to handle unsetenv command
- * @mycmd: the command at first index
- * @args: the command to execute
- * @check: the number of token return
+ * handling_unsetenv_command - this function handles unsetenv command
+ * @mycmd: is the command at first index
+ * @args: is the command to execute
+ * @check: is the number of token returned
  * @last_status: the variable that keeps the value of return
  * Return: 0 on success
  */
-int handle_unsetenv(char *mycmd, char *args[],
+int handling_unsetenv_command(char *mycmd, char *args[],
 		int check, int *last_status)
 {
-	if (chk_cmd_before_fork(mycmd) == 1 && check > 0 &&
+	if (checking_cmd_before_fork(mycmd) == 1 && check > 0 &&
 		s_strcmp(args[0], "unsetenv") == 0)
 	{
 		int unset_rs = unsetenv_cmd(mycmd);
