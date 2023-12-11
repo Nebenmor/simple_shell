@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * s_strcat - function to concatenate two strings
+ * s_strcat - this function concatenates two strings
  * @dest: the destination string
  * @src: the source string to append to dest
  * Return: pointer to the destination string 'dest'
@@ -10,9 +10,9 @@ char *s_strcat(char *dest, const char *src)
 {
 	char *temp = dest;
 
-	while (*temp != '\0')
+	for (; *temp != '\0'; temp++)
 	{
-		temp++;
+		/* body of function */
 	}
 
 	while (*src != '\0')
@@ -58,7 +58,7 @@ char *s_strstr(const char *str, const char *find)
 	{
 		return ((char *)str);
 	}
-	while (*str)
+	for (; *str; str++)
 	{
 		const char *h = str;
 		const char *n = find;
@@ -72,18 +72,17 @@ char *s_strstr(const char *str, const char *find)
 		{
 			return ((char *)str);
 		}
-		str++;
 	}
 	return (NULL);
 }
 
 /**
- * print_err - function to print err
+ * print_error - function to print err
  * @command: the command enter
  * @argv: program name
  * Return: void
  */
-void print_err(const char *command, char *argv)
+void print_error(const char *command, char *argv)
 {
 	const char *not_found_msg = ": not found\n";
 	const char *new = ": 1: ";

@@ -135,10 +135,10 @@ int ispositiveInt(char *str);
 
 int isnegativeInt(char *str);
 
-int execute_commands_from_file(const char *filename, char *envp[],
-							   char *program_name);
+int executing_file_commands(const char *name_of_file, char *envp[],
+							   char *name_of_program);
 
-int check_cmd(char *mycmd);
+int checking_for_cmd(char *MyCmd);
 
 char *_itoa(int num);
 
@@ -146,13 +146,13 @@ void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
 ssize_t s_getline(char **lineptr, size_t *n, FILE *stream);
 void *s_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
-int is_whitespace(char c);
-int is_word_start(char *str, int index);
+int is_whitespace_check(char c);
+int is_word_start_check(char *str, int index);
 
 void pwd(void);
 void handle_pwd(char *args[]);
 
-char *handle_double_dollars(char *cmd, char *envp[]);
+char *deal_with_double_dollars(char *cmd, char *envp[]);
 void deal_with_env_variable(char *cmd, char *output, int *i,
 		int *j, char *envp[]);
 void double_dollar(char *cmd, char *output, int *i, int *j);
@@ -172,6 +172,6 @@ int handle_noninbuilt_cmd(char *mycmd, char *args[], int check,
 int run_command(char *user_command, char *argv, char *envp[]);
 
 void intToString(int num, char *str, int str_size);
-void print_err(const char *command, char *argv);
+void print_error(const char *command, char *argv);
 
 #endif

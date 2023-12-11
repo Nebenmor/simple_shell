@@ -1,81 +1,80 @@
 #include "shell.h"
 
 /**
- * s_strchr - function that return pointer to the first occurence of char
+ * s_strchr - finds the first occurence of character in a string
  * @string: the string to search
- * @chr: the chracter searching for
+ * @chr: the character searching for
  * Return: pointer to the search character
  */
+
 char *s_strchr(const char *string, int chr)
 {
-	while (*string != '\0')
+	for (; *string != '\0'; string++)
 	{
 		if (*string == (char)chr)
 			return ((char *)string);
-		string++;
 	}
 	return (NULL);
 }
 
 /**
- * s_strtok - function to tokenize command
+ * s_strtok - this is a function that tokenize command
  * @str: the string to tokenize
  * @delim: the delimiter to make use of
  * Return: the tokenize string
  */
 char *s_strtok(char *str, const char *delim)
 {
-	static char *token;
-	char *start;
-	char *end;
+	char *beginning;
+	char *ending;
+	static char *tokens;
 
 	if (str != NULL)
 	{
-		token = str;
+		tokens = str;
 	}
-	else if (token == NULL)
+	else if (tokens == NULL)
 	{
 		return (NULL);
 	}
-	while (is_delimiter(*token, delim))
+	for (; is_delimiter(*tokens, delim); tokens++)
 	{
-		token++;
+		/* the body */
 	}
-	if (*token == '\0')
+	if (*tokens == '\0')
 	{
 		return (NULL);
 	}
-	start = token;
-	end = start;
-	while (*end != '\0')
+	beginning = tokens;
+	ending = beginning;
+	while (*ending != '\0')
 	{
-		if (is_delimiter(*end, delim))
+		if (is_delimiter(*ending, delim))
 		{
-			*end = '\0';
-			token = end + 1;
-			return (start);
+			*ending = '\0';
+			tokens = ending + 1;
+			return (beginning);
 		}
-		end++;
+		ending++;
 	}
-	token = end;
-	return (start);
+	tokens = ending;
+	return (beginning);
 }
 
 /**
- * is_delimiter - function to check for a delimiter
+ * is_delimiter - function that searches for a delimiter
  * @c: the character
  * @delim: the deimiter
  * Return:1 if success and 0 otherwise
  */
 int is_delimiter(char c, const char *delim)
 {
-	while (*delim)
+	for (; *delim; delim++)
 	{
 		if (c == *delim)
 		{
 			return (1);
 		}
-		delim++;
 	}
 	return (0);
 }
