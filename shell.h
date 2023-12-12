@@ -70,13 +70,13 @@ int pass_cd_arg(const char *user_command);
 
 ssize_t get_line(char *buffer, size_t size);
 
-char *s_strdup(const char *string);
+char *custom_string_duplicate(const char *custom_string);
 
-int s_strlen(const char *string);
+int custom_string_length(const char *custom_string);
 
-int s_strcspn(const char *string, const char *chr);
+int custom_string_cspan(const char *custom_string, const char *custom_chr);
 
-char *s_strcpy(char *dest_string, const char *src_String);
+char *custom_string_copy(char *custom_dest_string, const char *custom_src_string) ;
 
 char *s_strchr(const char *string, int chr);
 
@@ -92,9 +92,9 @@ char *s_strtok(char *str, const char *delim);
 
 int is_delimiter(char c, const char *delim);
 
-char *s_getenv(const char *string, char *envp[]);
+char *getEnvVarValue(const char *envVarName, char *envp[]);
 
-int sep_cmd(const char *user_command, char *result[], int num);
+int tokenizeCommand(const char *userCommand, char *tokens[], int maxTokens);
 
 char *handle_double_dollar(const char *cmd, char *envp[]);
 
@@ -110,26 +110,28 @@ int execute_command(char *args[], int check, int *last_status,
 int handle_cd(char *mycmd, char *args[], int check,
 			  int *last_status, char *argv, char *envp[]);
 
-int handle_exit(char *args[], int check, char *argv);
+int processExit(char *arguments[], int statusCheck, char *errorMsg);
 
 int handle_setenv(char *mycmd, char *args[], int check, int *last_status);
 
 int handle_unsetenv(char *mycmd, char *args[], int check, int *last_status);
 
-void replace_status_variable(char *args[], int count, int *last_status);
+void updateStatusVariable(char *arguments[], int argumentCount, int *result_size);
+void generateEnvVarName(int value, char *result, int str_size);
 
-int split_logical_operator(char *input, const char *delimiter,
-						   char *output[]);
+int custom_string_parser(char *custom_input, const char *custom_delimiter,
+						   char *custom_output[]);
 
 void remove_quote(char *input, char *output);
+int custom_program_entry(int custom_argc, char *custom_argv[], char *custom_envp[]);
 
 int alias(char *args[], int check);
 
 void signal_handler(int signal);
 
-int ispositiveInt(char *str);
+int check_positive_integer(char *custom_str);
 
-int isnegativeInt(char *str);
+int is_negative_integer(char *custom_str);
 
 int execute_commands_from_file(const char *filename, char *envp[],
 							   char *program_name);
@@ -157,15 +159,15 @@ char *get_process_id_string();
 int s_isalnum(unsigned char c);
 char *StrCpyM(char *beginning, size_t n);
 
-void createAndWriteErrorMessage(test *mytest, char *args[], char *argv);
-void handleExitWithCode(test *mytest, int code);
+void generateErrorMessage(test *testInstance, char *arguments[], char *errorMessage);
+void processExitCode(test *unusedTestInstance, int exitCode);
 
-void execute_logical_commands(char *copy, char *args[], int check,
-							  int *last_status, char *argv, char *envp[]);
-int is_whitespace_string(char *str);
-int handle_noninbuilt_cmd(char *mycmd, char *args[], int check,
-						  int *last_status, char *argv, char *envp[]);
-int run_command(char *user_command, char *argv, char *envp[]);
+void execute_custom_tasks(char *custom_copy, char *custom_args[], int custom_check,
+							  int *custom_last_status, char *custom_argv, char *custom_envp[]);
+int check_for_whitespace(char *custom_str);
+int custom_command_handler(char *custom_mycmd, char *custom_args[], int custom_check,
+                           int *custom_last_status, char *custom_argv, char *custom_envp[]);
+int execute_custom_command(char *custom_command, char *custom_argv, char *custom_envp[]);
 
 void intToString(int num, char *str, int str_size);
 void print_err(const char *command, char *argv);

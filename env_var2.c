@@ -2,104 +2,103 @@
 
 
 /**
- * s_getenv - function to get environment variable
- * @string: the environment varibale to get
+ * getEnvVarValue - function to get environment variable
+ * @envVarName: the environment varibale to get
  * @envp: parent environment
- * Return: pointer to the string result
+ * Return: pointer to the envVarName tokens
  */
-char *s_getenv(const char *string, char *envp[])
+char *getEnvVarValue(const char *envVarName, char *envp[])
 {
-	int index = 0;
+	int j = 0;
 
-	while (envp[index] != NULL)
+	while (envp[j] != NULL)
 	{
-		char *start = envp[index];
+		char *start = envp[j];
 
-		if (s_strncmp(start, string, s_strlen(string)) == 0
-			&& start[s_strlen(string)] == '=')
+		if (s_strncmp(start, envVarName, s_strlen(envVarName)) == 0
+			&& start[s_strlen(envVarName)] == '=')
 		{
-			return (start + s_strlen(string) + 1);
+			return (start + s_strlen(envVarName) + 1);
 		}
-		index++;
+		j++;
 	}
 	return (NULL);
 }
 
 /**
- * sep_cmd - function to seperate command
- * @user_command: the user command
- * @result: the array where the seperated command will be store
- * @num: maximum number of command
- * Return: the number of command seperated
+ * tokenizeCommand - function to seperate command
+ * @userCommand: the user command
+ * @tokens: the array where the seperated command will be store
+ * @maxTokens: maximum maxTokensber of command
+ * Return: the maxTokensber of command seperated
  */
-int sep_cmd(const char *user_command, char *result[], int num)
+int tokenizeCommand(const char *userCommand, char *tokens[], int maxTokens)
 {
-	int index = 0;
-	char *duplicate = s_strdup(user_command);
+	int j = 0;
+	char *duplicate = s_strdup(userCommand);
 	char *token = s_strtok(duplicate, ";");
 
-	while (token != NULL && index < num)
+	while (token != NULL && j < maxTokens)
 	{
-		result[index] = token;
+		tokens[j] = token;
 		token = s_strtok(NULL, ";");
-		index++;
+		j++;
 	}
 
 	free(duplicate);
-	return (index);
+	return (j);
 }
 
 /**
- * replace_status_variable - function to replace status variable
- * @args: the command
- * @count: number of count being executed
- * @last_status: variable to hold status code
+ * updateStatusVariable - function to replace status variable
+ * @arguments: the command
+ * @argumentCount: maxTokensber of argumentCount being executed
+ * @lastStatus: variable to hold status code
  * Return: void
  */
-void replace_status_variable(char *args[],
-		int count, int *last_status)
+void updateStatusVariable(char *arguments[],int argumentCount, int *lastStatus)
 {
-	int index;
+	int j;
 
-	for (index = 0; index < count; index++)
+	for (j = 0; j < argumentCount; j++)
 	{
-		if (s_strcmp(args[index], "$?") == 0)
+		if (s_strcmp(arguments[j], "$?") == 0)
 		{
-			char last_status_str[12];
+			char lastStatus_str[12];
 
-			intToString(*last_status, last_status_str, sizeof(last_status_str));
-			args[index] = s_strdup(last_status_str);
+			intToenvVarName(*lastStatus, lastStatus_str, sizeof(lastStatus_str));
+			arguments[j] = s_strdup(lastStatus_str);
 		}
 	}
 }
 
 /**
- * intToString - function to converrt int to string
- * @num: the num to convert
- * @str: the string to convert to
- * @str_size: the size
+ * intToenvVarName - function to converrt int to envVarName
+ * @value: the value to convert
+ * @result: the envVarName to convert to
+ * @result_size: the size
  * Return:void
  */
-void intToString(int num, char *str, int str_size)
+void intToenvVarName(int value, char *result, int result_size)
 {
-	int temp = num;
-	int numDigits = 1;
+	int temp = value;
+	int valueDigits = 1;
 
 	while (temp / 10 != 0)
 	{
-		numDigits++;
+		valueDigits++;
 		temp /= 10;
 	}
-	if (str_size <= numDigits)
+	if (result_size <= valueDigits)
 	{
 		return;
 	}
-	str[numDigits] = '\0';
+	result[valueDigits] = '\0';
 
-	while (numDigits > 0)
+	while (valueDigits > 0)
 	{
-		numDigits--;
-		str[numDigits] = '0' + (num % 10);
-		num /= 10;
+		valueDigits--;
+		result[valueDigits] = '0' + (value % 10);
+		value /= 10;
 	}
 }

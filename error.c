@@ -1,76 +1,76 @@
 #include "shell.h"
 
 /**
- * createAndWriteErrorMessage - function to display error msg
- * @mytest: status code
- * @args: the argument for exit if any
- * @argv: the program name
+ * generateerrorMsg - function to display error msg
+ * @testInstance: status code
+ * @arguments: the argument for exit if any
+ * @errorMsg: the program name
  * Return: void
  */
-void createAndWriteErrorMessage(test *mytest, char *args[], char *argv)
+void generateerrorMsg(test *testInstance, char *arguments[], char *errorMsg)
 {
 	char error_msg[100];
 
-	s_strcpy(error_msg, argv);
+	s_strcpy(error_msg, errorMsg);
 	s_strcat(error_msg, ": 1");
 	s_strcat(error_msg, ": ");
-	s_strcat(error_msg, args[0]);
+	s_strcat(error_msg, arguments[0]);
 	s_strcat(error_msg, ": Illegal number: ");
-	s_strcat(error_msg, args[1]);
+	s_strcat(error_msg, arguments[1]);
 	s_strcat(error_msg, "\n");
 	write(STDERR_FILENO, error_msg, s_strlen(error_msg));
-	mytest->status = 2;
+	testInstance->status = 2;
 }
 
 /**
  * handleExitWithCode - function to handle exit with code
- * @mytest: the status code
- * @code: the argument code
+ * @testInstance: the status code
+ * @exitcode: the argument code
  * Return: void
  */
-void handleExitWithCode(test __attribute__((__unused__)) *mytest, int code)
+void handleExitWithCode(test __attribute__((__unused__)) *testInstance, int exitCode)
 {
-	if (code >= 0)
-		exit(code);
+	if (exitCode >= 0)
+		exit(exitCode);
 }
 
 /**
  * handle_exit - funcnction to handle exit command
- * @args: the command pass to execute
- * @check: the number of token return
- * @argv: the program name
+ * @arguments: the command pass to execute
+ * @statusCheck: the number of token return
+ * @errorMsg: the program name
  * Return: 0 for success and 1 otherwise
  */
-int handle_exit(char *args[], int check, char *argv)
+int processExit(char *arguments[], int statusstatusCheck, char *errorMsg)
 {
-	test mytest;
+	test testInstance;
 
-	if (check > 0 && s_strcmp(args[0], "exit") == 0)
+	if (statusCheck > 0 && s_strcmp(arguments[0], "exit") == 0)
 	{
-		if (check == 1)
+		if (statusCheck == 1)
 		{
-			mytest.status = 0;
-			exit(mytest.status);
+			testInstance.status = 0;
+			exit(testInstance.status);
 		}
-		else if (check == 2)
+		else if (statusCheck == 2)
 		{
-			char *exitarg = args[1];
+			char *exitarg = arguments[1];
 
 			if (ispositiveInt(exitarg))
 			{
-				int code = atoi(exitarg);
+				int exitCode = atoi(exitarg);
 
-				handleExitWithCode(&mytest, code);
+				handleExitWithCode(&testInstance, exitCode);
 			}
 			else if (isnegativeInt(exitarg))
 			{
-				createAndWriteErrorMessage(&mytest, args, argv);
-				exit(mytest.status);
+				generateerrorMsg(&testInstance, arguments, errorMsg);
+				exit(testInstance.status);
 			}
 			else
 			{
-				createAndWriteErrorMessage(&mytest, args, argv);
-				exit(mytest.status);
+				generateerrorMsg(&testInstance, arguments, errorMsg);
+				exit(testInstance.status);
 			}
 		}
 		return (0);
