@@ -4,28 +4,30 @@
  * delete_comments - user generated function to delete comments
  * @cmd: represents the command of user
  * Return: void
- */
+ **/
+
+void delete_comments(char *cmd);
 
 void delete_comments(char *cmd)
 {
-int quo;
-int index;
+	int index;
+	int qou;
 
-quo = 0;
-index = 0;
+	index = 0;
+	qou = 0;
 
-for (; cmd[index] != '\0'; index++)
-{
-if (cmd[index] == '"')
-{
-quo = !quo;
-}
-else if (!quo && cmd[index] == '#' && is_word_start(cmd, index))
-{
-cmd[index] = '\0';
-break;
-}
-}
+	for (; cmd[index] != '\0'; index++)
+	{
+		if (cmd[index] == '"')
+		qou = !qou;
+
+	else if (!qou && cmd[index] == '#' && is_word_start(cmd, index))
+	{
+	cmd[index] = '\0';
+	break;
+	}
+
+	}
 }
 
 /**

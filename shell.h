@@ -32,23 +32,25 @@ typedef struct info
 
 void set_executable_name(char *name);
 
-void prompt(char *c, int len);
+void prompt_func(char *c, int len);
 
-ssize_t take_input(char *input);
+ssize_t takeing_input(char *input);
 
-int run_commandfile(char *user_command, char *argv, char *envp[]);
+int run_command_of_files(char *user_command, char *argv, char *envp[]);
 
 void handle_command_exit(int status, const char *user_command);
 
-void tokenize_command(char *user_command, char **args);
+void tokenizing_the_user_command(char *user_command, char **args);
 
-int exec_command(char *user_command, char *args[], char *argv, char **env);
+int execute_the_command(char *user_command, char *args[],
+		char *argv, char **env);
 
-int exec_command_withpath(char *user_command, char *args[], char **env);
+int executing_the_command_withPath(char *user_command,
+		char *args[], char **env);
 
-void exitShell(int status);
+void exit_the_Shell(int status);
 
-int chk_cmd_before_fork(char *user_command);
+int checking_cmd_before_fork(char *user_command);
 
 int setenv_cmd(char *user_command);
 
@@ -104,17 +106,19 @@ int get_status_code(int status);
 
 void IntStr(int val, char *strr, int size);
 
-int execute_command(char *args[], int check, int *last_status,
+int executing_comm(char *args[], int check, int *last_status,
 					char *argv, char *envp[]);
 
-int handle_cd(char *mycmd, char *args[], int check,
+int handling_cd_command(char *mycmd, char *args[], int check,
 			  int *last_status, char *argv, char *envp[]);
 
 int processExit(char *arguments[], int statusCheck, char *errorMsg);
 
-int handle_setenv(char *mycmd, char *args[], int check, int *last_status);
+int handling_setenv_command(char *mycmd, char *args[],
+		int check, int *last_status);
 
-int handle_unsetenv(char *mycmd, char *args[], int check, int *last_status);
+int handling_unsetenv_command(char *mycmd, char *args[],
+		int check, int *last_status);
 
 void updateStatusVariable(char *arguments[], int argumentCount, int *result_size);
 void generateEnvVarName(int value, char *result, int str_size);
@@ -127,16 +131,16 @@ int custom_program_entry(int custom_argc, char *custom_argv[], char *custom_envp
 
 int alias(char *args[], int check);
 
-void signal_handler(int signal);
+void handling_signal(int signal);
 
 int check_positive_integer(char *custom_str);
 
 int is_negative_integer(char *custom_str);
 
-int execute_commands_from_file(const char *filename, char *envp[],
-							   char *program_name);
+int executing_file_commands(const char *name_of_file, char *envp[],
+							   char *name_of_program);
 
-int check_cmd(char *mycmd);
+int checking_for_cmd(char *MyCmd);
 
 char *_itoa(int num);
 
@@ -144,18 +148,18 @@ void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
 ssize_t s_getline(char **lineptr, size_t *n, FILE *stream);
 void *s_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
-int is_whitespace(char c);
-int is_word_start(char *str, int index);
+int is_whitespace_check(char c);
+int is_word_start_check(char *str, int index);
 
 void pwd(void);
 void handle_pwd(char *args[]);
 
-char *handle_double_dollars(char *cmd, char *envp[]);
-void char *cmd, char *output, int *i,
-int *j, char *envp[]);
+char *deal_with_double_dollars(char *cmd, char *envp[]);
+void deal_with_env_variable(char *cmd, char *output, int *i,
+		int *j, char *envp[]);
 void double_dollar(char *cmd, char *output, int *i, int *j);
-char *get_environ(char *var_name, char *envp[]);
-char *get_process_id_string();
+char *get_environ(char *variable_name, char *envp[]);
+char *get_pid_str();
 int s_isalnum(unsigned char c);
 char *StrCpyM(char *beginning, size_t n);
 
@@ -170,6 +174,6 @@ int custom_command_handler(char *custom_mycmd, char *custom_args[], int custom_c
 int execute_custom_command(char *custom_command, char *custom_argv, char *custom_envp[]);
 
 void intToString(int num, char *str, int str_size);
-void print_err(const char *command, char *argv);
+void print_error(const char *command, char *argv);
 
 #endif
